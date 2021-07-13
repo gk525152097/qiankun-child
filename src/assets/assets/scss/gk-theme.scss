@@ -1,0 +1,39 @@
+@import "common";
+:root {
+  --login-bg: url('./../img/login_bg.png');
+
+  --color-body: 255,255,255;
+
+  --color-bg-main: 255,255,255;
+  --color-bg-sub: 0,0,0;
+  --color-primary: 89,131,252;
+
+  --color-font-main: 0,0,0;
+  --color-font-contrary: 255,255,255;
+  --color-font-sub: 23,23,23;
+
+  --border-radius-s: 4px;
+  --border-radius-m: 8px;
+  --border-radius-l: 12px;
+
+  --padding-s: 8px;
+  --padding-m: 12px;
+  --padding-l: 24px;
+
+  --margin-s: 8px;
+  --margin-m: 12px;
+  --margin-l: 24px;
+
+  --color-bg-1: 238,238,238;
+  --color-bg-2: 204,204,204;
+  --color-bg-3: 136,136,136;
+
+  --transition-m: all 0.3s;
+}
+
+/* 侧边菜单栏 */
+.menu-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 4px;
+}
