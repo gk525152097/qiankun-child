@@ -8,7 +8,6 @@
 
 <script>
 import { appName } from '@/systemConfig'
-import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'TabsBar',
   components: {},

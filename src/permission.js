@@ -13,7 +13,8 @@ import BaseLayout from '@/layout/BaseLayout'
 
 import 'nprogress/nprogress.css'
 import {appName} from './systemConfig'
-import BlankLayout from './layout/BlankLayout' // progress bar style
+import BlankLayout from './layout/BlankLayout'
+import PageLayout from './layout/PageLayout' // progress bar style
 NProgress.configure({ showSpinner: false }) // NProgress configuration
 
 // const whiteList = [
@@ -29,13 +30,27 @@ router.beforeEach(async (to, from, next) => {
     // document.title = `${defaultSettings.mainSystemName} ${to.name}`
   }
 
-  // console.log('child')
-  // console.log(to)
+  console.log('child')
+  console.log(to)
+
+  console.log(window.__CAPTRUE_PAGE__)
 
   // 处理是否作为子应用 判断地址是否为子应用路由
-  if (sessionStorage.getItem(appName) && !window.location.href.includes(appName)) {
-    NProgress.done()
-    return false
+  if (!window.__CAPTRUE_PAGE__) {
+    if (sessionStorage.getItem(appName) && !window.location.href.includes(appName)) {
+      NProgress.done()
+      return false
+    }
+  }
+
+  function handleLayout () {
+    if (window.__CAPTRUE_PAGE__) {
+      return PageLayout
+    }
+    if (sessionStorage.getItem(appName)) {
+      return BlankLayout
+    }
+    return BaseLayout
   }
 
   /**
@@ -51,7 +66,7 @@ router.beforeEach(async (to, from, next) => {
     const enterRoute = { // 通过动态菜单添加 并修改redirect
       path: '/',
       name: '首页',
-      component: sessionStorage.getItem(appName) ? BlankLayout : BaseLayout,
+      component: handleLayout(),
       redirect: menuList[0].path // 获取菜单第一个数据为默认跳转页面
     }
     router.addRoute(enterRoute)

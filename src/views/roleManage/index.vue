@@ -1,21 +1,35 @@
 <template>
   <div class="index">
-    子应用 的 角色管理
-    <div @click="num += 1"> 数据 + </div>
-    {{ num }}
+    <div class="box box1">{{ appName }}</div>
+    <div class="box box2">
+      <el-button @click="num += 1">+ 数据</el-button>
+      <span>{{ num }}</span>
+    </div>
+    <div class="box box3">
+      <el-button @click="drawer = true" type="primary" >抽屉</el-button>
+    </div>
+    <el-drawer
+      title="我是标题"
+      :visible.sync="drawer"
+      :with-header="false">
+      <span>我来啦!</span>
+    </el-drawer>
   </div>
 </template>
 
 <script>
 import actions from '../../actions'
 import { mapState } from 'vuex'
+import { appName } from '@/systemConfig'
 export default {
   name: 'index',
   components: {},
   props: {},
   data () {
     return {
-      num: 0
+      num: 0,
+      appName: appName,
+      drawer: false
     }
   },
   computed: {

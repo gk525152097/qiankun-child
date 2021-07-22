@@ -54,14 +54,20 @@ export async function bootstrap (props) {
  */
 function handleInitChild (props) {
   const { childAppList, jumpRouter, microStore } = props
-  const nameList = childAppList.map(item => item.appName)
-  Vue.prototype.$jumpRouter = jumpRouter // 跳转方式
-  Vue.prototype.$microStore = microStore
-  if (!nameList.includes(appName)) { // 防止重复添加子应用store
-    props.childAppList.push({
-      appName,
-      store
-    })
+  if (childAppList) {
+    const nameList = childAppList.map(item => item.appName)
+    if (!nameList.includes(appName)) { // 防止重复添加子应用store
+      props.childAppList.push({
+        appName,
+        store
+      })
+    }
+  }
+  if (jumpRouter) {
+    Vue.prototype.$jumpRouter = jumpRouter // 跳转方式
+  }
+  if (microStore) {
+    Vue.prototype.$microStore = microStore
   }
 }
 

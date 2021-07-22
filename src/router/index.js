@@ -18,7 +18,7 @@ export const routes = [
 ]
 
 export default new VueRouter({
-  base: window.__POWERED_BY_QIANKUN__ ? `/${appName}` : '/',
+  base: window.__CAPTRUE_PAGE__ ? undefined : (window.__POWERED_BY_QIANKUN__ ? `/${appName}` : '/'),
   mode: 'history',
   routes: routes
 })
