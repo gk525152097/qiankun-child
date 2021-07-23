@@ -18,6 +18,7 @@ Vue.use(element)
 Vue.use(Vuex)
 
 Vue.config.productionTip = false
+Vue.prototype.$isChild = false // 判断是否为子应用
 
 let instance = null
 
@@ -53,6 +54,7 @@ export async function bootstrap (props) {
  * @param props 主应用传入参数
  */
 function handleInitChild (props) {
+  Vue.prototype.$isChild = true
   const { childAppList, jumpRouter, microStore } = props
   if (childAppList) {
     const nameList = childAppList.map(item => item.appName)

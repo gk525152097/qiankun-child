@@ -33,8 +33,6 @@ router.beforeEach(async (to, from, next) => {
   console.log('child')
   console.log(to)
 
-  console.log(window.__CAPTRUE_PAGE__)
-
   // 处理是否作为子应用 判断地址是否为子应用路由
   if (!window.__CAPTRUE_PAGE__) {
     if (sessionStorage.getItem(appName) && !window.location.href.includes(appName)) {
