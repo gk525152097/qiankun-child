@@ -1,6 +1,7 @@
 <template>
     <div class="index">
       子应用 菜单管理
+      <div class="title">测试</div>
       <div class="btn" @click="handleSelfRouter">子应用页面跳转</div>
       <div class="btn" v-if="$isChild" @click="$jumpRouter('/menuManage', {name: 1})">子应用 跳转 主应用</div>
       <div class="btn" v-if="$isChild" @click="$jumpRouter('/app-vue-demo2/menuManage', {name: 1})">子应用A 跳转 子应用B</div>
