@@ -93,4 +93,5 @@ router.afterEach(() => {
 
 router.onError(error => {
   console.log(error)
+  NProgress.done()
 })

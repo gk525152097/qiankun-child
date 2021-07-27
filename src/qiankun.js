@@ -32,5 +32,5 @@ class Actions {
   }
 }
 
-const actions = new Actions()
-export default actions
+const globalAction = new Actions()
+export default globalAction

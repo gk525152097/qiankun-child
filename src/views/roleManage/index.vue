@@ -48,6 +48,11 @@ export default {
   created () {
   },
   mounted () {
+    this.$globalAction.onGlobalStateChange((state, prev) => {
+      console.log('子应用')
+      console.log(state, prev)
+    })
+    console.log(this.$globalState)
   },
   destroyed () {
   }

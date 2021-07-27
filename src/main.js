@@ -5,6 +5,7 @@ import router from './router'
 import store from './store'
 import element from 'element-ui'
 import { appName } from './systemConfig'
+import globalAction from './qiankun'
 
 import './permission'
 
@@ -19,6 +20,7 @@ Vue.use(Vuex)
 
 Vue.config.productionTip = false
 Vue.prototype.$isChild = false // 判断是否为子应用
+Vue.prototype.$globalAction = globalAction
 
 let instance = null
 
@@ -55,7 +57,7 @@ export async function bootstrap (props) {
  */
 function handleInitChild (props) {
   Vue.prototype.$isChild = true
-  const { childAppList, jumpRouter, microStore } = props
+  const { childAppList, jumpRouter, globalState, setGlobalState } = props
   if (childAppList) {
     const nameList = childAppList.map(item => item.appName)
     if (!nameList.includes(appName)) { // 防止重复添加子应用store
@@ -68,8 +70,9 @@ function handleInitChild (props) {
   if (jumpRouter) {
     Vue.prototype.$jumpRouter = jumpRouter // 跳转方式
   }
-  if (microStore) {
-    Vue.prototype.$microStore = microStore
+  if (globalState) {
+    Vue.prototype.$globalState = globalState
+    Vue.prototype.$setGlobalState = setGlobalState
   }
 }
 
@@ -78,6 +81,7 @@ function handleInitChild (props) {
  */
 export async function mount (props) {
   console.log(`mount-${appName}`)
+  Vue.prototype.$globalAction.setActions(props)
   render(props)
 }
 
