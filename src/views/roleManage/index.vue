@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import actions from '../../actions'
 import { mapState } from 'vuex'
 import { appName } from '@/systemConfig'
 export default {
@@ -40,7 +39,6 @@ export default {
   watch: {},
   methods: {
     handleActions () {
-      actions.setGlobalState({ test: 2 })
       console.log(window.childAppList)
       window.childAppList[0].childStore.commit('system/SET_TEST', '主应用')
     }

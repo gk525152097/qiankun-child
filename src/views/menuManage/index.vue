@@ -26,7 +26,7 @@ export default {
     handleSelfRouter () {
       this.$router.push({ path: '/roleManage' })
     },
-    handleInfo() {
+    handleInfo () {
       this.$setGlobalState({ info: 1 })
     }
   },
