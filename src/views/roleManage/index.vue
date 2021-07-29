@@ -8,11 +8,12 @@
     <div class="box box3">
       <el-button @click="drawer = true" type="primary" >抽屉</el-button>
     </div>
+    <div>{{ JSON.stringify(info) }}</div>
     <el-drawer
       title="我是标题"
       :visible.sync="drawer"
       :with-header="false">
-      <span>我来啦!</span>
+      <span>{{ appName }} 弹窗</span>
     </el-drawer>
   </div>
 </template>
@@ -28,31 +29,34 @@ export default {
     return {
       num: 0,
       appName: appName,
-      drawer: false
+      drawer: false,
+      info: {}
     }
   },
   computed: {
     ...mapState({
-      test: state => state.system.test
+      globalData: state => state.global.globalData
     })
   },
-  watch: {},
-  methods: {
-    handleActions () {
-      console.log(window.childAppList)
-      window.childAppList[0].childStore.commit('system/SET_TEST', '主应用')
+  watch: {
+    globalData: {
+      handler: function(val, oldVal) {
+        console.log('watch')
+        console.log(val)
+      },
+      deep: true
     }
+  },
+  methods: {
   },
   created () {
   },
   mounted () {
-    this.$globalAction.onGlobalStateChange((state, prev) => {
-      console.log('子应用')
-      console.log(state, prev)
-    })
-    console.log(this.$globalState)
   },
   destroyed () {
+  },
+  activated () {
+    console.log(this.globalData)
   }
 }
 </script>

@@ -30,8 +30,8 @@ router.beforeEach(async (to, from, next) => {
     // document.title = `${defaultSettings.mainSystemName} ${to.name}`
   }
 
-  console.log('child')
-  console.log(to)
+  // console.log('child')
+  // console.log(to)
 
   // 处理是否作为子应用 判断地址是否为子应用路由
   if (!window.__CAPTRUE_PAGE__) {
@@ -57,8 +57,6 @@ router.beforeEach(async (to, from, next) => {
   if (!store.state.system.menuTree.length) {
     const menuList = await handleAppMenu()
     const menuTree = createRoutes(transform(menuList))
-
-    console.log(menuTree)
 
     // 添加入口 这里需要处理是 作为子应用 还是 独立项目
     const enterRoute = { // 通过动态菜单添加 并修改redirect

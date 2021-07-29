@@ -1,5 +1,6 @@
 <template>
   <div class="index">
+    child
     <div class="title">{{ error.code }}</div>
     <div class="info">{{ error.info }}</div>
   </div>

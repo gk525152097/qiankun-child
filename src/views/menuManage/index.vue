@@ -33,11 +33,6 @@ export default {
   created () {
   },
   mounted () {
-    this.$globalAction.onGlobalStateChange((state, prev) => {
-      console.log('子应用-menuManage')
-      console.log(state, prev)
-      this.info = state.info
-    })
   },
   destroyed () {
   }

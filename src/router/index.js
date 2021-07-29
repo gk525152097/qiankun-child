@@ -17,8 +17,18 @@ export const routes = [
   }
 ]
 
+function handleBase () {
+  if (window.__CAPTRUE_PAGE__) {
+    return undefined
+  }
+  if (window.__POWERED_BY_QIANKUN__) {
+    return `/${appName}`
+  }
+  return '/'
+}
+
 export default new VueRouter({
-  base: window.__CAPTRUE_PAGE__ ? undefined : (window.__POWERED_BY_QIANKUN__ ? `/${appName}` : '/'),
+  base: handleBase(),
   mode: 'history',
   routes: routes
 })
