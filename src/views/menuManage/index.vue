@@ -2,7 +2,7 @@
     <div class="index">
       子应用 菜单管理
       <div class="title">测试</div>
-      <div class="title">主应用信息:{{ info }}</div>
+      <div class="title">主应用信息:{{ JSON.stringify(globalData) }}</div>
       <el-button @click="handleInfo">调用主应该修改数据接口</el-button>
       <div class="btn" @click="handleSelfRouter">子应用页面跳转</div>
       <div class="btn" v-if="$isChild" @click="$jumpRouter('/menuManage', {name: 1})">子应用 跳转 主应用</div>
@@ -11,16 +11,20 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'index',
   components: {},
   props: {},
   data () {
     return {
-      info: ''
     }
   },
-  computed: {},
+  computed: {
+    ...mapState({
+      globalData: state => state.global.globalData
+    })
+  },
   watch: {},
   methods: {
     handleSelfRouter () {

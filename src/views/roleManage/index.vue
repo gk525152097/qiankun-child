@@ -8,7 +8,7 @@
     <div class="box box3">
       <el-button @click="drawer = true" type="primary" >抽屉</el-button>
     </div>
-    <div>{{ JSON.stringify(info) }}</div>
+    <div>{{ JSON.stringify(globalData) }}</div>
     <el-drawer
       title="我是标题"
       :visible.sync="drawer"
