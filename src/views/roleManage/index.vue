@@ -40,7 +40,7 @@ export default {
   },
   watch: {
     globalData: {
-      handler: function(val, oldVal) {
+      handler: function (val, oldVal) {
         console.log('watch')
         console.log(val)
       },

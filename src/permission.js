@@ -2,7 +2,6 @@
  * vue-router守卫
  * 主要在路由跳转的时候进行处理
  */
-
 import router from './router'
 import NProgress from 'nprogress' // progress bar
 import store from './store'
@@ -12,7 +11,7 @@ import { handleAppMenu } from '@/api/system'
 import BaseLayout from '@/layout/BaseLayout'
 
 import 'nprogress/nprogress.css'
-import {appName} from './systemConfig'
+import { appName } from './systemConfig'
 import BlankLayout from './layout/BlankLayout'
 import PageLayout from './layout/PageLayout' // progress bar style
 NProgress.configure({ showSpinner: false }) // NProgress configuration

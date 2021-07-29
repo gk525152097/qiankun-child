@@ -56,16 +56,7 @@ export async function bootstrap (props) {
  */
 function handleInitChild (props) {
   Vue.prototype.$isChild = true
-  const { childAppList, jumpRouter, globalState, setGlobalState } = props
-  if (childAppList) {
-    const nameList = childAppList.map(item => item.appName)
-    if (!nameList.includes(appName)) { // 防止重复添加子应用store
-      props.childAppList.push({
-        appName,
-        store
-      })
-    }
-  }
+  const { jumpRouter, globalState, setGlobalState } = props
   if (jumpRouter) {
     Vue.prototype.$jumpRouter = jumpRouter // 跳转方式
   }
