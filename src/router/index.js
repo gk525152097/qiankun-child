@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { appName } from '../systemConfig'
 
 Vue.use(VueRouter)
 
@@ -17,18 +16,8 @@ export const routes = [
   }
 ]
 
-function handleBase () {
-  if (window.__CAPTRUE_PAGE__) {
-    return undefined
-  }
-  if (window.__POWERED_BY_QIANKUN__) {
-    return `/${appName}`
-  }
-  return '/'
-}
-
 export default new VueRouter({
-  base: handleBase(),
+  base: window._CHIlD_BASE_PATH__ || '/',
   mode: 'history',
   routes: routes
 })

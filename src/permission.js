@@ -11,7 +11,6 @@ import { handleAppMenu } from '@/api/system'
 import BaseLayout from '@/layout/BaseLayout'
 
 import 'nprogress/nprogress.css'
-import { appName } from './systemConfig'
 import BlankLayout from './layout/BlankLayout'
 import PageLayout from './layout/PageLayout' // progress bar style
 NProgress.configure({ showSpinner: false }) // NProgress configuration
@@ -25,26 +24,26 @@ router.beforeEach(async (to, from, next) => {
   // 加载条
   NProgress.start()
   // 切换浏览窗口名称
-  if (to.name) {
-    // document.title = `${defaultSettings.mainSystemName} ${to.name}`
-  }
+  // if (to.name) {
+  //   document.title = `${defaultSettings.mainSystemName} ${to.name}`
+  // }
 
-  // console.log('child')
-  // console.log(to)
+  console.log('child')
+  console.log(to)
+  console.log(window._BASE_PATH__)
 
   // 处理是否作为子应用 判断地址是否为子应用路由
-  if (!window.__CAPTRUE_PAGE__) {
-    if (sessionStorage.getItem(appName) && !window.location.href.includes(appName)) {
-      NProgress.done()
-      return false
-    }
+
+  if (window._BASE_PATH__ && !window.location.href.includes(window._BASE_PATH__)) {
+    NProgress.done()
+    return false
   }
 
   function handleLayout () {
-    if (window.__CAPTRUE_PAGE__) {
+    if (window.__SINGLR_PAGE__) {
       return PageLayout
     }
-    if (sessionStorage.getItem(appName)) {
+    if (window._BASE_PATH__) {
       return BlankLayout
     }
     return BaseLayout

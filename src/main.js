@@ -45,9 +45,9 @@ if (window.__POWERED_BY_QIANKUN__) {
  */
 export async function bootstrap (props) {
   console.log(`bootstrap-${appName}`)
+  window._BASE_PATH__ = window._CHIlD_BASE_PATH__
+  window.__SINGLR_PAGE__ = props.singlePage
   handleInitChild(props)
-  // 判断是否为子应用
-  sessionStorage.setItem(appName, true)
 }
 
 /**
@@ -55,7 +55,7 @@ export async function bootstrap (props) {
  * @param props 主应用传入参数
  */
 function handleInitChild (props) {
-  Vue.prototype.$isChild = true
+  Vue.prototype.$isChild = true // 判断是否为子应用
   const { jumpRouter, globalState, setGlobalState } = props
   if (jumpRouter) {
     Vue.prototype.$jumpRouter = jumpRouter // 跳转方式
