@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import router from './router'
 import store from './store'
 import element from 'element-ui'
+import GlobalCard from '@/components/GlobalCard'
 import { appName } from './systemConfig'
 import globalAction from './qiankun'
 
@@ -17,6 +18,7 @@ import './assets/scss/gk-theme.scss'
 
 Vue.use(element)
 Vue.use(Vuex)
+Vue.use(GlobalCard)
 
 Vue.config.productionTip = false
 Vue.prototype.$isChild = false // 判断是否为子应用

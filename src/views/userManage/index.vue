@@ -5,13 +5,18 @@
         <el-form v-if="showSearch" label-position="top" label-width="80px" :model="searchForm" ref="searchForm" :rules="searchFormRules">
           <el-row :gutter="20">
             <el-col :span="6">
-              <el-form-item label="角色名称" prop="name">
-                <el-input v-model="searchForm.name"></el-input>
+              <el-form-item label="登陆账号" prop="account">
+                <el-input v-model="searchForm.account"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="角色代码" prop="region">
-                <el-input v-model="searchForm.code"></el-input>
+              <el-form-item label="用户名称" prop="username">
+                <el-input v-model="searchForm.username"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="用户角色" prop="role">
+                <el-input v-model="searchForm.role"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -22,8 +27,8 @@
           <el-button class="btn-primary" @click="() => handleVisibleForm()">新增</el-button>
         </div>
         <div class="right">
-          <el-button class="btn" icon="el-icon-search" circle @click="handlePageData" title="查询"></el-button>
-          <el-button class="btn" icon="el-icon-refresh-right" circle @click="handleReset" title="重制"></el-button>
+          <el-button class="bg-primary have-bg-color" icon="el-icon-search" circle @click="handlePageData" title="查询"></el-button>
+          <el-button class="bg-primary have-bg-color" icon="el-icon-refresh-right" circle @click="handleReset" title="重制"></el-button>
           <el-button v-if="showSearch" icon="el-icon-arrow-up" circle @click="showSearch = !showSearch" title="展开"></el-button>
           <el-button v-else icon="el-icon-arrow-down" circle @click="showSearch = !showSearch" title="收回"></el-button>
         </div>
@@ -31,15 +36,15 @@
     </global-card>
     <global-card class="card">
       <el-table :data="tableData">
-        <el-table-column prop="name" label="角色名称"></el-table-column>
-        <el-table-column prop="code" label="角色代码"></el-table-column>
-        <el-table-column prop="describe" label="角色描述"></el-table-column>
+        <el-table-column prop="account" label="账号"></el-table-column>
+        <el-table-column prop="username" label="名称"></el-table-column>
+        <el-table-column prop="role" label="角色"></el-table-column>
         <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="() => handleVisibleForm(scope.row)" >编辑</el-button>
             <el-popconfirm
               title="确认删除？"
-              @onConfirm="handleDelete(scope.row)"
+              @confirm="handleDelete(scope.row)"
             >
               <el-button slot="reference" type="text" size="small">删除</el-button>
             </el-popconfirm>
@@ -57,23 +62,35 @@
         :total="totalData">
       </el-pagination>
     </global-card>
-    <AddBox />
+    <ActionBox
+      :visible="visibleForm"
+      :checkItem="checkItem"
+      @handleVisibleForm="handleVisibleForm"
+      @handleAdd="handleAdd"
+      @handleModify="handleModify"
+    />
   </div>
 </template>
 
 <script>
+import { handlePageData, handleDelete, handleAdd, handleModify } from '@/api/userManage'
 import mixin from '@/mixins/cTable'
-import AddBox from './AddBox'
+import ActionBox from './ActionBox'
 export default {
   name: 'index',
   components: {
-    AddBox
+    ActionBox
   },
   props: {},
   mixins: [mixin],
   data () {
     return {
-      pageName: 'cTable'
+      pageName: 'cTable',
+      searchForm: {
+        name: '',
+        appName: '',
+        entry: ''
+      }
     }
   },
   computed: {
@@ -84,43 +101,57 @@ export default {
      * 修改
      */
     handleModify (formData) {
-      // handleModify()
-      //   .then(res => console.log(res))
-      //   .catch(res => console.log(res))
+      handleModify(formData)
+        .then(res => {
+          console.log(res)
+          this.handlePageData()
+          this.handleVisibleForm()
+        })
+        .catch(res => console.log(res))
     },
     /**
      * 新增
      */
     handleAdd (formData) {
-      // handleAdd()
-      //   .then(res => console.log(res))
-      //   .catch(res => console.log(res))
+      handleAdd(formData)
+        .then(res => {
+          console.log(res)
+          this.handlePageData()
+          this.handleVisibleForm()
+        })
+        .catch(res => console.log(res))
     },
     /**
      * 删除操作
      * @param record 删除的当前项
      */
     handleDelete (record) {
-      // handleDelete({ id: record.id })
-      //   .then(res => this.$message(res.message))
-      //   .catch(res => this.$message(res.message))
+      handleDelete({ id: record.id })
+        .then(res => {
+          console.log(res)
+          this.handlePageData()
+        })
+        .catch(res => this.$message(res.message))
     },
     /**
      * 查询
      */
     handlePageData () {
-      // handlePageData({
-      //   ...this.searchForm,
-      //   pageSize: this.pageSize,
-      //   currentPage: this.currentPage
-      // })
-      //   .then(res => { this.tableData = res.data })
-      //   .catch(res => this.$message(res.message))
+      console.log(this.searchForm)
+      handlePageData({
+        ...this.searchForm,
+        pageSize: this.pageSize,
+        currentPage: this.currentPage
+      })
+        .then(res => { this.tableData = res })
+        .catch(res => this.$message(res.message))
     }
   },
   created () {
   },
-  mounted () {},
+  mounted () {
+    this.handlePageData()
+  },
   destroyed () {
   }
 }
@@ -136,17 +167,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .left {
-      .btn-primary {
-        @include btn-primary;
-      }
-    }
-    .right {
-      .btn {
-        color: #ffffff;
-        @include bg-primary;
-      }
-    }
     i {
       cursor: pointer;
       margin-right: var(--margin-s);

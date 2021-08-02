@@ -1,37 +1,89 @@
 <template>
-    <div class="index">
-      子应用 菜单管理
-      <div class="title">测试</div>
-      <div class="title">主应用信息:{{ JSON.stringify(globalData) }}</div>
-      <el-button @click="handleInfo">调用主应该修改数据接口</el-button>
-      <div class="btn" @click="handleSelfRouter">子应用页面跳转</div>
-      <div class="btn" v-if="$isChild" @click="$jumpRouter('/menuManage', {name: 1})">子应用 跳转 主应用</div>
-      <div class="btn" v-if="$isChild" @click="$jumpRouter('/app-vue-demo2/menuManage', {name: 1})">子应用A 跳转 子应用B</div>
-    </div>
+  <div class="index">
+    <global-card>
+      <el-button class="btn-primary" @click="() => handleVisibleForm()">+ 新增菜单</el-button>
+      <el-table
+        :data="tableData"
+        style="width: 100%;margin-bottom: 20px;"
+        row-key="id"
+        default-expand-all
+        :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+        <el-table-column prop="date" label="日期"></el-table-column>
+        <el-table-column prop="name" label="姓名"></el-table-column>
+        <el-table-column prop="address" label="地址"></el-table-column>
+        <el-table-column prop="address" label="操作">
+          <template slot-scope="scope">
+            <el-button type="text" size="small" @click="() => handleVisibleForm(scope.row)">编辑</el-button>
+            <el-button type="text" size="small">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </global-card>
+    <ActionBox
+      :checkItem="checkItem"
+      :visible="visibleForm"
+      @handleVisibleForm="handleVisibleForm"
+      @handleAdd="handleAdd"
+    />
+  </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import ActionBox from './ActionBox'
+import mixin from '@/mixins/cTable'
 export default {
   name: 'index',
-  components: {},
+  components: {
+    ActionBox
+  },
+  mixins: [mixin],
   props: {},
   data () {
     return {
+      checkItem: {},
+      microApp: '',
+      activeName: '',
+      preActiveName: '',
+      tableData: [{
+        id: 1,
+        date: '2016-05-02',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        id: 2,
+        date: '2016-05-04',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1517 弄'
+      }, {
+        id: 3,
+        date: '2016-05-01',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1519 弄',
+        children: [{
+          id: 31,
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          id: 32,
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }]
+      }, {
+        id: 4,
+        date: '2016-05-03',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1516 弄'
+      }]
     }
   },
   computed: {
-    ...mapState({
-      globalData: state => state.global.globalData
-    })
   },
   watch: {},
   methods: {
-    handleSelfRouter () {
-      this.$router.push({ path: '/roleManage' })
-    },
-    handleInfo () {
-      this.$setGlobalState({ info: 1 })
+    handleAdd (record) {
+      console.log(record)
     }
   },
   created () {
@@ -44,19 +96,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/scss/common";
 .index {
-  .btn {
-    display: inline-block;
-    margin: 0 12px;
-    padding: 8px 16px;
-    border: 1px solid #409eff;
-    border-radius: 8px;
-    cursor: pointer;
-    color: #409eff;
-    &:hover {
-      background: #409eff;
-      color: #ffffff;
-    }
+  #container {
+    min-height: 200px;
   }
 }
 </style>
