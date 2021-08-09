@@ -1,7 +1,12 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 
-Vue.use(VueRouter)
+Vue.use(Router)
+
+const originalPush = Router.prototype.push
+Router.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 export const routes = [
   {
@@ -16,7 +21,7 @@ export const routes = [
   }
 ]
 
-export default new VueRouter({
+export default new Router({
   base: window._CHIlD_BASE_PATH__ || '/',
   mode: 'history',
   routes: routes

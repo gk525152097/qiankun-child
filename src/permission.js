@@ -28,9 +28,9 @@ router.beforeEach(async (to, from, next) => {
   //   document.title = `${defaultSettings.mainSystemName} ${to.name}`
   // }
 
-  console.log('child')
-  console.log(to)
-  console.log(window._BASE_PATH__)
+  // console.log('child')
+  // console.log(to)
+  // console.log(window._BASE_PATH__)
 
   // 处理是否作为子应用 判断地址是否为子应用路由
 

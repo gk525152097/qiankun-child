@@ -1,5 +1,6 @@
 <template>
   <div class="index">
+    子应用A
     <global-card>
       <el-button class="btn-primary" @click="() => handleVisibleForm()">+ 新增菜单</el-button>
       <el-table

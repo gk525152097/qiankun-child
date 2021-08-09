@@ -3,7 +3,7 @@ import App from './App.vue'
 import Vuex from 'vuex'
 import router from './router'
 import store from './store'
-import element from 'element-ui'
+import element, { Message } from 'element-ui'
 import GlobalCard from '@/components/GlobalCard'
 import { appName } from './systemConfig'
 import globalAction from './qiankun'
@@ -22,6 +22,7 @@ Vue.use(GlobalCard)
 
 Vue.config.productionTip = false
 Vue.prototype.$isChild = false // 判断是否为子应用
+Vue.prototype.$message = Message
 
 let instance = null
 
@@ -63,7 +64,7 @@ function handleInitChild (props) {
     Vue.prototype.$jumpRouter = jumpRouter // 跳转方式
   }
   if (globalState) {
-    store.commit('global/HANDLE_DATA', globalState) // 用于数据初始化
+    store.commit('global/HANDLE_DATA', globalState.globalData) // 用于数据初始化
     Vue.prototype.$setGlobalState = setGlobalState // 用于修改全局状态
   }
 }
@@ -75,6 +76,7 @@ export async function mount (props) {
   console.log(`mount-${appName}`)
   globalAction.setActions(props)
   globalAction.onGlobalStateChange((state, prev) => {
+    console.log('子应用 qiankun 响应')
     store.commit('global/HANDLE_DATA', state)
   })
   render(props)
@@ -85,8 +87,8 @@ export async function mount (props) {
  */
 export async function unmount (props) {
   console.log(`unmount-${appName}`)
-  instance.$destroy();
-  instance.$el.innerHTML = ""
+  instance.$destroy()
+  instance.$el.innerHTML = ''
   instance = null
 }
 
